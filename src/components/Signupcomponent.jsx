@@ -1,116 +1,117 @@
-import axios from 'axios';
-import React, { useState } from 'react'
+import axios from "axios";
+import React, { useState } from "react";
+// import "../styles/loader.css";
+import "./stylings/Signin.css";
 
 const Signupcomponent = () => {
-    // hooks to capture the diffrent state of our application
-    const[username,setusername]=useState("");
-    const[email,setemail]=useState("");
-    const[phone,setphone]=useState("");
-    const[password,setpassword]=useState("");
-    // add three additional hooks to manage the state of your application
-    const[loading,setloading]=useState("");
-    const[success,setsuccess]=useState("");
-    const[error,seterror]=useState("");
-    const submit =async(e)=>{
-      //prevent the site from reloading when the person click the signup button
-      e.preventDefault();
-      // update the loading hook with new message that the user shall see on the browser
-      setloading("please wait as we upload your data.... ")
+  const [username, setusername] = useState("");
+  const [email, setemail] = useState("");
+  const [phone, setphone] = useState("");
+  const [password, setpassword] = useState("");
 
-      try{
-        // create a form data object that will hold all the data from the hooks 
-        const data=new FormData();
-        
-        // add the diffrent details into the new object created
-        data.append("username",username)
-        data.append("email",email)
-        data.append("password",password)
-        data.append("phone",phone)
+  const [loading, setloading] = useState(false);
+  const [success, setsuccess] = useState("");
+  const [error, seterror] = useState("");
 
-        // post your data to the backend API
-        const response=await axios.post("https://joykosgei.pythonanywhere.com/api/signup",data)
-        // set back the loading hook to empty
-        setloading("")
+  // Hourglass loader
+  const Loader = () => (
+    <div className="hourglassBackground">
+      <div className="hourglassContainer">
+        <div className="hourglassCurves"></div>
+        <div className="hourglassCapTop"></div>
+        <div className="hourglassGlassTop"></div>
+        <div className="hourglassSand"></div>
+        <div className="hourglassSandStream"></div>
+        <div className="hourglassCapBottom"></div>
+        <div className="hourglassGlass"></div>
+      </div>
+    </div>
+  );
 
-        // by pressumption, we assume the regisrtration proccess went on well
-        // therefore we update the success hook with a new message 
+  const submit = async (e) => {
+    e.preventDefault();
+    setloading(true);
+    setsuccess("");
+    seterror("");
 
-        setsuccess("user registered successfully")
-        // clear the hooks for them to take in the new data
-        setusername("")
-        setphone("")
-        setphone("")
-        setemail("")
-        setpassword("")
+    try {
+      const data = new FormData();
+      data.append("username", username);
+      data.append("email", email);
+      data.append("password", password);
+      data.append("phone", phone);
 
-      }
-      catch(error){
-        // set the loading hook back to default(empty)
-        setloading("")
-        // if there was an error encountered during the registration proccess update the error hook
-        seterror("SORRY,REGISTRATION FAILED AN EEROR OCCURED")
+      await axios.post("https://joykosgei.pythonanywhere.com/api/signup", data);
 
-      }
-      
+      setloading(false);
+      setsuccess("✅ User registered successfully");
+      setusername("");
+      setphone("");
+      setemail("");
+      setpassword("");
+    } catch (err) {
+      setloading(false);
+      seterror("❌ Sorry, registration failed.");
     }
+  };
+
   return (
     <div className="row justify-content-center mt-4">
-        <div className="col-md-6 p-4 shadow card">
-            <h1>signup</h1>
-            {loading}
-            {success}
-            {error}
-            <form onSubmit={submit}>
-          <input type="text"
-          className='form-control'
-          required
-          placeholder='Enter  username here'
-          value={username}
-          onChange={(e)=>setusername(e.target.value)}
-          
+      <div className="col-md-6 p-4 shadow card signup-card">
+        <h1>Signup</h1>
+
+        {loading && <Loader />}
+        {success && <p className="text-success">{success}</p>}
+        {error && <p className="text-danger">{error}</p>}
+
+        <form onSubmit={submit}>
+          <input
+            type="text"
+            className="form-control"
+            required
+            placeholder="Enter username here"
+            value={username}
+            onChange={(e) => setusername(e.target.value)}
           />
           <br />
-          {/* {username} */}
 
-          <input type="email"
-          className='form-control'
-          required
-          placeholder='Enter the email address here '
-          value={email}text
-          onChange={(r)=>setemail(r.target.value)}
-          
-          
+          <input
+            type="email"
+            className="form-control"
+            required
+            placeholder="Enter the email address here"
+            value={email}
+            onChange={(e) => setemail(e.target.value)}
           />
           <br />
-          {/* {email} */}
 
-          <input type="number" 
-          className='form-control'
-          required
-          placeholder='Enter your phone number here'
-          value={phone}
-          onChange={(n)=>setphone(n.target.value)}
+          <input
+            type="number"
+            className="form-control"
+            required
+            placeholder="Enter your phone number here"
+            value={phone}
+            onChange={(e) => setphone(e.target.value)}
           />
           <br />
-          {/* {number} */}
-        
-          <input type="password"
-          className='form-control'
-          required
-          placeholder='Enter your password here'
-          value={password}
-          onChange={(n)=>setpassword(n.target.value)}
+
+          <input
+            type="password"
+            className="form-control"
+            required
+            placeholder="Enter your password here"
+            value={password}
+            onChange={(e) => setpassword(e.target.value)}
           />
           <br />
-          
-          {/* {password} */}
 
-          <button type="submit" className="btn btn-primary">signup</button>
-
+          <button type="submit" className="btn btn-primary w-100">
+            Signup
+          </button>
         </form>
-        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Signupcomponent
+export default Signupcomponent;
