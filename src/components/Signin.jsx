@@ -1,9 +1,15 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Signin = () => {
   const[email,setemail]=useState("")
   const[password,setpassword]=useState("")
+
+  // import use navigate hook that will help you move to another page
+  //  when someone enters the correct details
+  const navigate=useNavigate();
+
 
   // CREATE OTHER THREE ADDITIONAL HOOKS
   const[loading,setloading]=useState(false)
@@ -51,10 +57,12 @@ const Signin = () => {
       // set loading to false so that it stops loading
       setloading(false)
 
-      console .log(response.data)
+      console.log(response.data)
 
       if (response.data.message==="login succesful"){
-        setsuccess(response.data.message)    
+        // setsuccess(response.data.message) 
+        localStorage.setItem("user",JSON.stringify(response.data.user))
+        navigate("/")
 
 
       }
@@ -90,7 +98,7 @@ const Signin = () => {
           />
           {email}
           <br />
-          <input type="text" 
+          <input type="password" 
           className="form-control"
           placeholder="enter your password here"
           value={password}
