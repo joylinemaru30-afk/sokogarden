@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from "axios";
+import FooterSocial from './Footer';
 
 const Addproduct = () => {
   const[productname,setproductname]=useState("")
@@ -113,6 +114,7 @@ const Addproduct = () => {
 
         </form>
     </div>
+    <FooterSocial/>
     </div>
   )
 }

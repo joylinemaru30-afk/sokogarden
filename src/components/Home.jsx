@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import FooterSocial from './Footer';
 
 const Home = () => {
 
@@ -7,6 +9,9 @@ const Home = () => {
   const[products,setproduct]=useState([]);
   const[loading,setloading]=useState(false);
   const[error,seterror]=useState("");
+
+
+  const navigate=useNavigate()
 
   console.log(products)
 
@@ -73,18 +78,20 @@ const Home = () => {
       {products.map((product,index)=>(
       <div className='col-md-3 mb-4'>
         <div className='card shadow h -100'>
-          <img src={img_url+product.product_photo} alt="product image" className='card-img product-img mt-3' />
+          <img src={img_url+product.product_photo} alt="product image" className='card-img product
+          _img mt-3' />
         <div className="cardbody">
           <h5>{product.product_name}</h5>
-          <p className='text-dark'>{product.product_description}</p>
+          <p className='text-dark'>{product.product_description.slice(0,50)}...</p>
           <b className="text-warning">{product.product_cost}</b> <br />
 
-           <button className=" btn btn-success mt-2" >Buy now</button>
+           <button className=" btn btn-success mt-2" onClick={()=> navigate("/mpesapayment",{state:{product}})} >Buy now</button>
         </div>
     </div>
     </div>
     ))}
     </div>
+    <FooterSocial/>
     </div>
     
 

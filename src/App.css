@@ -41,3 +41,11 @@
   object-fit: contain;
   width: 100%;
 }
+
+.footer{
+  height: 300px;
+  color: aqua;
+  justify-content: center;
+  background-color: #1c062e;
+
+}

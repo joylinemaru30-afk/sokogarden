@@ -6,22 +6,26 @@ import Signin from './components/Signin';
 import Notfound from './components/Notfound';
 import'bootstrap/dist/css/bootstrap.min.css'
 import Signupcomponent from './components/Signupcomponent';
+import Mpesapayment from './components/Mpesapayment';
+import Navbar from './components/Navbar';
+import 'bootstrap/dist/js/bootstrap.min.js'
+import AboutUsSection from './components/Aboutus';
+
 
 function App() {
   return (
     <Router>
       <div className="App">
-      <header className="App-header">
-        <h1>Sokogarden Buy &Sell Online</h1>
+        <Navbar/>
 
-      </header>
 
       <Routes>
      < Route path="/"element={<Home/>} />
       <Route path="/addproduct"element={<Addproduct/>}/>
       <Route path="/signin"element={<Signin/>}/>
       <Route path="/signup"element={<Signupcomponent/>}/>
-      
+      <Route path="/mpesapayment"element={<Mpesapayment/>}/>
+      <Route path="/aboutus"element={<AboutUsSection/>}/>
       <Route path="*"element={<Notfound/>}/>
 
       </Routes>

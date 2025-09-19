@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 // import "../styles/loader.css";
 import "./stylings/Signin.css";
+import FooterSocial from "./Footer";
 
 const Signupcomponent = () => {
   const [username, setusername] = useState("");
@@ -110,6 +111,8 @@ const Signupcomponent = () => {
           </button>
         </form>
       </div>
+      <FooterSocial/>
+      
     </div>
   );
 };
